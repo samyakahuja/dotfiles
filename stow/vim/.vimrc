@@ -11,6 +11,7 @@ let mapleader = " "
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'vimwiki/vimwiki'
     Plug 'https://github.com/masukomi/vim-markdown-folding'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     call plug#end()
 
 " some basics
