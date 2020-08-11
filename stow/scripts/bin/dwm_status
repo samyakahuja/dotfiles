@@ -1,0 +1,47 @@
+#!/bin/bash
+
+print_wifi() {
+	ip=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
+	if=wlp3s0
+		while IFS=$': \t' read -r label value
+		do
+			case $label in SSID) SSID=$value
+				;;
+			signal) SIGNAL=$value
+				;;
+		esac
+	done < <(iw "$if" link)
+	echo -e "🕸️$SSID $SIGNAL $ip"
+}
+
+print_mem(){
+    mem=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
+	echo "🧠$(bc <<< "scale=2; ($mem) / (1024 * 1024)")G"
+}
+
+print_bat(){
+	hash acpi || return 0
+	onl="$(grep "on-line" <(acpi -V))"
+	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT*/capacity)"
+	if test -z "$onl"
+	then
+		# suspend when we close the lid
+		#systemctl --user stop inhibit-lid-sleep-on-battery.service
+		echo -e "🔋${charge}"
+	else
+		# On mains! no need to suspend
+		#systemctl --user start inhibit-lid-sleep-on-battery.service
+		echo -e "🔋${charge}"
+	fi
+}
+
+print_date(){
+	#date "+%a %m-%d %T%:::z"
+    echo "🕒$(date "+%a %d %b %I:%M")"
+}
+
+while true
+do
+    xsetroot -name "$(print_mem) $(print_wifi) $(print_bat) $(print_date)"
+	sleep 1
+done
