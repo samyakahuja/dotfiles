@@ -17,4 +17,6 @@ setbg &
 redshift -P -O 4000
 xbacklight -set 40
 
+xss-lock -- /usr/local/bin/slock &
+
 exec dwm

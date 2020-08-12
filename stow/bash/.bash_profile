@@ -11,5 +11,5 @@ read -p "Start Xorg[Y/y]? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    exec startx
+    startx
 fi

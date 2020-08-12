@@ -11,12 +11,12 @@ print_wifi() {
 				;;
 		esac
 	done < <(iw "$if" link)
-	echo -e "🕸️$SSID $SIGNAL $ip"
+	echo -e "🗼 $SSID 🕸️ $SIGNAL 🔢 $ip"
 }
 
 print_mem(){
     mem=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
-	echo "🧠$(bc <<< "scale=2; ($mem) / (1024 * 1024)")G"
+	echo "🧠 $(bc <<< "scale=2; ($mem) / (1024 * 1024)")G"
 }
 
 print_bat(){
@@ -37,7 +37,7 @@ print_bat(){
 
 print_date(){
 	#date "+%a %m-%d %T%:::z"
-    echo "🕒$(date "+%a %d %b %I:%M")"
+    echo "🕒 $(date "+%a %d %b %I:%M")"
 }
 
 while true
