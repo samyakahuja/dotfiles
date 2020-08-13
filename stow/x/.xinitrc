@@ -14,8 +14,8 @@ dunst &
 dwm_status &
 setbg &
 
-redshift -P -O 4000
-xbacklight -set 40
+redshift -P -O 3500
+xbacklight -set 30
 
 xss-lock -- /usr/local/bin/slock &
 
