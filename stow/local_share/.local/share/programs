@@ -1,4 +1,3 @@
-#TAG,NAME,PURPOSE
 yay
 vim
 git
@@ -33,3 +32,9 @@ telegram-desktop
 zathura
 zathura-djvu
 zathura-pdf-mupdf
+stack
+pandoc
+patat-bin
+bitwarden
+postgresql
+zip

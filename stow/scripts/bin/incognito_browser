@@ -1,0 +1,3 @@
+#!/bin/sh
+
+firefox-developer-edition --private-window
