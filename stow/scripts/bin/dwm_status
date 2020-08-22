@@ -7,16 +7,26 @@ print_wifi() {
 		do
 			case $label in SSID) SSID=$value
 				;;
-			signal) SIGNAL=$value
+            signal) SIGNAL=$(awk '{print $1}' <<< $value)
 				;;
 		esac
 	done < <(iw "$if" link)
-	echo -e "🗼 $SSID 🕸️ $SIGNAL 🔢 $ip"
+	printf "%s %s %+03d dBm %s" "🗼" "$SSID" "$SIGNAL" "$ip"
 }
 
 print_mem(){
     mem=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
 	echo "🧠 $(bc <<< "scale=2; ($mem) / (1024 * 1024)")G"
+}
+
+print_mic() {
+    state="$(amixer get Capture | tail -n1 | sed -r 's/.*\[(.*)\].*/\1/')"
+    if test $state == "off"
+    then
+        echo "🤐"
+    else
+        echo "🎤"
+    fi
 }
 
 print_volume(){
@@ -44,8 +54,23 @@ print_date(){
     echo "🕒 $(date "+%a %d %b %I:%M")"
 }
 
+print_docker(){
+    state="$(systemctl is-active docker)"
+    if test $state == "active"
+    then
+        echo "🐳"
+    else
+        echo ""
+    fi
+}
+
+print_disk(){
+    home="$(df -h | grep '/home' | awk '{print $5}')"
+    echo "💾 $home"
+}
+
 while true
 do
-    xsetroot -name " $(print_volume) $(print_mem) $(print_wifi) $(print_bat) $(print_date)"
+    xsetroot -name " $(print_docker) | $(print_mic) $(print_volume) | $(print_mem) | $(print_disk) | $(print_wifi) | $(print_bat)| $(print_date)"
 	sleep 1
 done
