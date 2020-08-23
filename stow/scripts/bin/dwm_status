@@ -50,8 +50,7 @@ print_bat(){
 }
 
 print_date(){
-	#date "+%a %m-%d %T%:::z"
-    echo "🕒 $(date "+%a %d %b %I:%M")"
+    echo "$(date "+%a %d %b %I:%M")"
 }
 
 print_docker(){

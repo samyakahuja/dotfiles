@@ -16,6 +16,7 @@ setbg &
 
 redshift -P -O 3500
 xbacklight -set 30
+thunar --daemon
 
 xss-lock -- /usr/local/bin/slock &
 
